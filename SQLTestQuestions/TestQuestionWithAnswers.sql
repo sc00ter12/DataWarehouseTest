@@ -272,7 +272,6 @@ AS
 --===================================================
 -- Name: dbo.ProcGetPatientMatchScore
 --
-
 --===================================================
 BEGIN;
     SET NOCOUNT ON;
@@ -310,8 +309,7 @@ BEGIN;
     CROSS APPLY dbo.fnColumnMatchScore ( 'VARCHAR', p.Sex, @inSex, @SexFull, @SexPartial ) s
     ORDER BY TotalMatchScore DESC;
 END;
-
-
+GO
 
 
 /**********************
