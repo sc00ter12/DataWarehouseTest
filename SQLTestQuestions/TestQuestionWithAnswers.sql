@@ -28,15 +28,15 @@ or be blank if no nickname exists.
 WITH ct_SpaceIndex AS
 (
     SELECT
-	   PersonID
-	 , PersonName
+       PersonID
+     , PersonName
      , 1 AS StartIndex
      , CHARINDEX(' ',PersonName) AS EndIndex
-	FROM PersonDatabase.dbo.Person
+    FROM PersonDatabase.dbo.Person
     UNION ALL
     SELECT
-	   PersonID
-	 , PersonName
+       PersonID
+     , PersonName
      , EndIndex+1 AS StartIndex
      , CASE 
           WHEN CHARINDEX(' ',PersonName,EndIndex+1) = 0 THEN LEN(PersonName)
@@ -48,7 +48,7 @@ WITH ct_SpaceIndex AS
    , ct_NameParts AS
 (
     SELECT
-	   PersonID
+       PersonID
      , CASE 
           WHEN CHARINDEX('(',SUBSTRING(PersonName,StartIndex,EndIndex-StartIndex+1)) > 0 THEN 1
           WHEN CHARINDEX(')',SUBSTRING(PersonName,StartIndex,EndIndex-StartIndex+1)) > 0 THEN 1
@@ -56,7 +56,7 @@ WITH ct_SpaceIndex AS
        END AS NickName
      , REPLACE(REPLACE(LTRIM(RTRIM(SUBSTRING(PersonName,StartIndex,EndIndex-StartIndex+1))),'(',''),')','') AS NamePartClean
      , ROW_NUMBER() OVER ( PARTITION BY PersonID
-	                                  , CHARINDEX('(',SUBSTRING(PersonName,StartIndex,EndIndex-StartIndex+1))
+                                      , CHARINDEX('(',SUBSTRING(PersonName,StartIndex,EndIndex-StartIndex+1))
                                       + CHARINDEX(')',SUBSTRING(PersonName,StartIndex,EndIndex-StartIndex+1))
                                ORDER BY StartIndex ) AS RN
     FROM ct_SpaceIndex
