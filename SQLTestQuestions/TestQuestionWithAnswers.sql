@@ -257,7 +257,7 @@ END;
 GO
 
 --Stored proc
-IF OBJECT_ID(N'dbo.ProcGetPatientMatchScore',N'S') IS NOT NULL
+IF OBJECT_ID(N'dbo.ProcGetPatientMatchScore') IS NOT NULL
     DROP PROC dbo.ProcGetPatientMatchScore;
 GO
 
